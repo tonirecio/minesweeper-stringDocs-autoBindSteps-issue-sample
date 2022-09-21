@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.css'
+import MineField from './components/MineField'
+import MineFieldCell from './components/MineFieldCell'
 
-function App() {
+const App = () => (
+  <div>
+    <MineField rows={3} columns={3}>
+      <MineFieldCell hasMine={false} cellInfo='hidden' />
+      <MineFieldCell hasMine cellInfo='hidden' />
+      <MineFieldCell hasMine={false} cellInfo='hidden' />
+    </MineField>
+  </div>
+)
+
+export default App
+
+// http://babeljs.io
+
+// Azucarillo sintáctico
+
+/*
+import './App.css'
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <p>Hola Mundo</p>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
+*/
