@@ -5,9 +5,10 @@ import MineFieldCell from './components/MineFieldCell'
 const App = () => (
   <div>
     <MineField rows={3} columns={3}>
-      <MineFieldCell hasMine={false} cellInfo='hidden' />
-      <MineFieldCell hasMine cellInfo='hidden' />
-      <MineFieldCell hasMine={false} cellInfo='hidden' />
+      <MineFieldCell isMined={false} cellInfo='1' />
+      <MineFieldCell isMined={false} isHidden={false} cellInfo='hidden' />
+      <MineFieldCell isMined cellInfo='hidden' />
+      <MineFieldCell isMined={false} cellInfo='hidden' />
     </MineField>
   </div>
 )

@@ -1,3 +1,9 @@
+@font-face {
+	font-family: 'Dangrek';
+	src: url('fonts/Dangrek-Regular.ttf') format('ttf');
+	font-display: swap;
+}
+
 .App {
   text-align: center;
 }
@@ -44,6 +50,12 @@
   display: inline-block;
   line-height: 50px;
   font-size: 20px;
+}
+
+.cell-number {
+  font-size: 18pt;
+  color: #000000;
+  font-family: 'Dangrek';
 }
 
 .svg-icon {
