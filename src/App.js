@@ -1,17 +1,16 @@
 import './App.css'
-import MineField from './components/MineField'
-import MineFieldCell from './components/MineFieldCell'
+import Game from './components/Game'
 
-const App = () => (
-  <div>
-    <MineField rows={3} columns={3}>
-      <MineFieldCell isMined={false} cellInfo='1' />
-      <MineFieldCell isMined={false} isHidden={false} cellInfo='hidden' />
-      <MineFieldCell isMined cellInfo='hidden' />
-      <MineFieldCell isMined={false} cellInfo='hidden' />
-    </MineField>
-  </div>
-)
+const App = () => {
+  const queryString = window.location.search
+  const urlParams = new URLSearchParams(queryString)
+  const mockData = urlParams.get('mockData')
+  if (mockData) {
+    return (<Game mockData={mockData} />)
+  } else {
+    return (<Game />)
+  }
+}
 
 export default App
 
