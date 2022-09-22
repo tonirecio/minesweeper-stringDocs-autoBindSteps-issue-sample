@@ -1,6 +1,9 @@
 // import ReactDOM from 'react-dom'
 import { useState } from 'react'
 import mineImage from './resources/mine.svg'
+import flagImage from './resources/flag.svg'
+import questionImage from './resources/question.svg'
+// import explosionImage from './resources/explosion.svg'
 
 const MineFieldCell = ({ isMined, isHidden, cellInfo }) => {
   const [isHiddenValue, setIsHidden] = useState(true)
@@ -31,15 +34,27 @@ const MineFieldCell = ({ isMined, isHidden, cellInfo }) => {
   }
   */
 
+  const getTagImage = (tag) => {
+    if (tag === 'flag') {
+      return flagImage
+    } else if (tag === 'question') {
+      return questionImage
+    } else {
+      return ''
+    }
+  }
+
   if (isHiddenValue) {
     return (
       <div className='mine-field-cell'>
-        <button onClick={unleash} onContextMenu={tag}>{cellInfoValue}</button>
+        <button onClick={unleash} onContextMenu={tag}>
+          {(cellInfoValue !== 'blank') ? <img src={getTagImage(cellInfoValue)} className='svg-icon' /> : ''}
+        </button>
       </div>
     )
-  } else if (cellInfoValue === 'mine') {
+  } else if (cellInfoValue === 'explosion') {
     console.log('Render #1  -  Mine')
-    return (<div className='mine-field-cell'><img src={mineImage} className='svg-icon' /></div>)
+    return (<div className='mine-field-cell highlight'><img src={mineImage} className='svg-icon' /></div>)
   } else {
     console.log('Render #2  -  No Mine')
     return (

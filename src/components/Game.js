@@ -1,8 +1,10 @@
+import './styles/Game.css'
 import MineField from './MineField'
 import MineFieldCell from './MineFieldCell'
 import { validateMockData, createBoardFromMockData } from '../helpers/mockDataHelper'
 
 const Game = ({ mockData }) => {
+  // const CELL_WIDTH = 40
   let _gameBoard = []
 
   const minefieldMining = (amount) => {
@@ -50,7 +52,11 @@ const Game = ({ mockData }) => {
   const getMinefieldCells = () => {
     return _gameBoard.map((row, rowindex) => {
       return row.map((cell, cellindex) => {
-        return (<MineFieldCell key={`${rowindex}-${cellindex}`} cellInfo={cell} />)
+        return (
+          <MineFieldCell
+            key={`${rowindex}-${cellindex}`} isHidden cellInfo='blank' isMined={cell === '*'}
+          />
+        )
       })
     })
   }
@@ -66,11 +72,9 @@ const Game = ({ mockData }) => {
         <div>{/* status */}</div>
         <ol>{/* TODO */}</ol>
       </div>
-      <div className='game-board'>
-        <MineField rows={3} columns={3}>
-          {getMinefieldCells()}
-        </MineField>
-      </div>
+      <MineField rows={_gameBoard.length} columns={_gameBoard[0].length}>
+        {getMinefieldCells()}
+      </MineField>
     </div>
   )
 }

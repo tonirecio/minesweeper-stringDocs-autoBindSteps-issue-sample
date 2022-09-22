@@ -4,11 +4,39 @@
 	font-display: swap;
 }
 
-.App {
-  text-align: center;
+html,
+body {
+	height: 100%;
 }
 
-.App-logo {
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #f7e4cb;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.cell-number {
+  font-size: 18pt;
+  color: #000000;
+  font-family: 'Dangrek';
+}
+
+.svg-icon {
+	width: 30px;
+  height: 30px;
+  display: inline-block;
+  align-items: center;
+  vertical-align: middle;
+}
+
+/* .App {
+  text-align: center;
+} */
+
+/* .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
@@ -41,26 +69,5 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
-.mine-field-cell {
-  width: 50px;
-  height: 50px;
-  border: 1px solid black;
-  display: inline-block;
-  line-height: 50px;
-  font-size: 20px;
-}
-
-.cell-number {
-  font-size: 18pt;
-  color: #000000;
-  font-family: 'Dangrek';
-}
-
-.svg-icon {
-	width: 40px;
-  display: inline-block;
-  align-items: center;
-  vertical-align: middle;
-}

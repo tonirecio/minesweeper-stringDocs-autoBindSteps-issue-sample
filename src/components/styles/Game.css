@@ -1,0 +1,45 @@
+/* olive  4e6659
+pink   ff5e6f 
+cream f7e4cb*/
+
+.game {
+  background-color: #0a121a;
+	border-radius: 20px;
+	padding: 15px 15px 30px 15px;
+}
+
+.mine-field {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mine-field-cell {  
+	text-align: center;
+	width: 40px;
+  height: 40px;
+	/* font-size: 20pt; */
+	color: #000000;
+  background-color: #4e6659;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	border: none;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.highlight {
+  background-color: #ff5e6f;
+}
+
+.mine-field-cell button {
+  width: 95%;
+  height: 95%;
+  border: 2px;
+  /* background-color: transparent; */
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
