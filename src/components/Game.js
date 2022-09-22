@@ -1,67 +1,56 @@
-import './styles/Game.css'
+// import './styles/Game.css'
 import MineField from './MineField'
-import MineFieldCell from './MineFieldCell'
+// import MineFieldCell from './MineFieldCell'
 import { validateMockData, createBoardFromMockData } from '../helpers/mockDataHelper'
+import { createBoard } from '../helpers/boardHelper'
+import { useState, useEffect } from 'react'
+import * as APP from '../App.consts'
+// import { getByDisplayValue } from '@testing-library/react'
 
 const Game = ({ mockData }) => {
-  // const CELL_WIDTH = 40
-  let _gameBoard = []
+  const [gameBoard, setGameBoard] = useState([])
 
-  const minefieldMining = (amount) => {
-    let mines = 0
-    while (mines < amount) {
-      const randomRow = Math.floor(Math.random() * _gameBoard.length)
-      const randomColumn = Math.floor(Math.random() * _gameBoard[0].length)
-      if (_gameBoard[randomRow][randomColumn] !== '*') {
-        _gameBoard[randomRow][randomColumn] = '*'
-        mines += 1
-      }
-    }
-  }
-
-  const createBoard = (rows, columns, mines) => {
-    const board = []
-    for (let i = 0; i < rows; i += 1) {
-      board.push([])
-      for (let j = 0; j < columns; j += 1) {
-        board[i].push('o')
-      }
-    }
-    return board
-  }
-
-  const initialize = () => {
-    if (mockData && validateMockData(mockData)) {
-      _gameBoard = createBoardFromMockData(mockData)
+  useEffect(() => {
+    if (validateMockData(mockData)) {
+      setGameBoard(createBoardFromMockData(mockData))
     } else {
-      _gameBoard = createBoard(8, 8, 10)
-      minefieldMining(10)
+      setGameBoard(createBoard(APP.NUMBER_OF_ROWS, APP.NUMBER_OF_COLUMNS, APP.NUMBER_OF_MINES))
     }
-    // _userInteractionBoard = createUserInteractionBoard()
-    // totalMines = getTotalMines(_gameBoard)
-    // taggedMines = 0
-    // wellTaggedMines = 0
-    // displayBoard()
-    // evaluateBoard()
-
-    // setCellIcon(1, 3, 'explosion')
-    // setCellIcon(1, 1, 'naval-mine')
-    console.log(_gameBoard)
-  }
+    console.log('gameboard', gameBoard)
+  }, [])
 
   const getMinefieldCells = () => {
-    return _gameBoard.map((row, rowindex) => {
-      return row.map((cell, cellindex) => {
-        return (
-          <MineFieldCell
-            key={`${rowindex}-${cellindex}`} isHidden cellInfo='blank' isMined={cell === '*'}
-          />
-        )
-      })
+    return gameBoard.map((row, rowindex) => {
+      return (
+        <div className='board-row' key={rowindex}>
+          key={rowindex} style={{
+            display: 'flex',
+            alignItems: 'center',
+            position: 'relative'
+          }}
+        >
+          {row.map((cell, cellindex) => {
+            return (
+              <div key={cellindex} style={{ display: 'flex' }}><button /></div>
+            )
+          })}
+        </div>
+      )
     })
   }
 
-  initialize()
+  // const getMinefieldCells = () => {
+  //   return gameBoard.map((row, rowindex) => {
+  //     return row.map((cell, cellindex) => {
+  //       return (
+  //         <button key={`${rowindex}-${cellindex}`} cellInfo={cell} />
+  //         // <MineFieldCell
+  //         //   key={`${rowindex}-${cellindex}`} cellInfo={cell}
+  //         // />
+  //       )
+  //     })
+  //   })
+  // }
 
   return (
     <div className='game'>
@@ -72,7 +61,7 @@ const Game = ({ mockData }) => {
         <div>{/* status */}</div>
         <ol>{/* TODO */}</ol>
       </div>
-      <MineField rows={_gameBoard.length} columns={_gameBoard[0].length}>
+      <MineField rows={APP.NUMBER_OF_ROWS} columns={APP.NUMBER_OF_COLUMNS}>
         {getMinefieldCells()}
       </MineField>
     </div>
