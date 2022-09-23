@@ -1,6 +1,5 @@
-// import './styles/Game.css'
+import './styles/Game.css'
 import MineField from './MineField'
-// import MineFieldCell from './MineFieldCell'
 import { validateMockData, createBoardFromMockData } from '../helpers/mockDataHelper'
 import { createBoard } from '../helpers/boardHelper'
 import { useState, useEffect } from 'react'
@@ -19,51 +18,17 @@ const Game = ({ mockData }) => {
     console.log('gameboard', gameBoard)
   }, [])
 
-  const getMinefieldCells = () => {
-    return gameBoard.map((row, rowindex) => {
-      return (
-        <div className='board-row' key={rowindex}>
-          key={rowindex} style={{
-            display: 'flex',
-            alignItems: 'center',
-            position: 'relative'
-          }}
-        >
-          {row.map((cell, cellindex) => {
-            return (
-              <div key={cellindex} style={{ display: 'flex' }}><button /></div>
-            )
-          })}
-        </div>
-      )
-    })
-  }
-
-  // const getMinefieldCells = () => {
-  //   return gameBoard.map((row, rowindex) => {
-  //     return row.map((cell, cellindex) => {
-  //       return (
-  //         <button key={`${rowindex}-${cellindex}`} cellInfo={cell} />
-  //         // <MineFieldCell
-  //         //   key={`${rowindex}-${cellindex}`} cellInfo={cell}
-  //         // />
-  //       )
-  //     })
-  //   })
-  // }
-
   return (
     <div className='game'>
+      <div><h1>The React Minesweeper</h1></div>
       <div><p>Mock Data: </p>
         <p>{mockData}</p>
       </div>
-      <div className='game-info'>
+      <div>
         <div>{/* status */}</div>
         <ol>{/* TODO */}</ol>
       </div>
-      <MineField rows={APP.NUMBER_OF_ROWS} columns={APP.NUMBER_OF_COLUMNS}>
-        {getMinefieldCells()}
-      </MineField>
+      <MineField gameBoard={gameBoard} />
     </div>
   )
 }

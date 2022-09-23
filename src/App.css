@@ -1,8 +1,8 @@
-@font-face {
+/* @font-face {
 	font-family: 'Dangrek';
 	src: url('fonts/Dangrek-Regular.ttf') format('ttf');
 	font-display: swap;
-}
+} */
 
 html,
 body {
@@ -18,19 +18,19 @@ body {
 	align-items: center;
 }
 
-.cell-number {
+/* .cell-number {
   font-size: 18pt;
   color: #000000;
   font-family: 'Dangrek';
-}
+} */
 
-.svg-icon {
+/* .svg-icon {
 	width: 30px;
   height: 30px;
   display: inline-block;
   align-items: center;
   vertical-align: middle;
-}
+} */
 
 /* .App {
   text-align: center;

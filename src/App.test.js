@@ -1,8 +1,10 @@
-/* import { render, screen } from '@testing-library/react';
-import App from './App';
+/* eslint-disable no-undef */
+/* eslint-env mocha */
+import { render, screen } from '@testing-library/react'
+import App from './App'
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-}); */
+test('Game title', () => {
+  render(<App />)
+  const linkElement = screen.getByText(/The React Minesweeper/i)
+  expect(linkElement).toBeInTheDocument()
+})

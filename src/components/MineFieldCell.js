@@ -43,6 +43,11 @@ const MineFieldCell = ({ cellInfo }) => {
   //   }
   // }
 
+  return (
+    <div className='mine-field-cell'>
+      <button style={{ width: '100%', height: '100%' }}>X</button>
+    </div>
+  )
   // if (isHiddenValue) {
   //   return (
   //     <div className='mine-field-cell'>
