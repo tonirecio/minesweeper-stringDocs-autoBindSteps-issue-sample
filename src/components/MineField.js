@@ -1,20 +1,47 @@
-// import { useState, useEffect } from 'react'
-import { MineFieldCell } from './MineFieldCell'
+import './styles/MineField.css'
+import { useState, useEffect } from 'react'
+import MineFieldCell from './MineFieldCell'
+import { validateMockData, createBoardFromMockData } from '../helpers/mockDataHelper'
+import { createBoard } from '../helpers/boardHelper'
+import * as APP from '../App.consts'
 
-const MineField = ({ gameBoard }) => {
-  // const [dataMatrix, setDataMatrix] = useState([])
+const MineField = ({ mockData }) => {
+  const [gameBoard, setGameBoard] = useState([])
+
+  useEffect(() => {
+    if (mockData && validateMockData(mockData)) {
+      setGameBoard(createBoardFromMockData(mockData))
+    } else {
+      setGameBoard(createBoard(APP.NUMBER_OF_ROWS, APP.NUMBER_OF_COLUMNS, APP.NUMBER_OF_MINES))
+    }
+  }, [mockData])
+
+  const updateTag = (e, row, column, tag) => {
+    e.preventDefault()
+    const newBoard = [...gameBoard]
+    newBoard[row][column].userTag = tag
+    setGameBoard(newBoard)
+  }
+
+  const unleashCell = (e, row, column) => {
+    const newBoard = [...gameBoard]
+    newBoard[row][column].isRevealed = true
+    setGameBoard(newBoard)
+  }
 
   const getMinefieldCells = () => {
     return gameBoard.map((row, rowindex) => {
       return (
         <div
-          className='board-row' key={rowindex}
+          className='mine-field-row' key={rowindex}
         >
           {row.map((cell, cellindex) => {
             return (
-            // <div key={cellindex} style={{ display: 'flex' }}><button /></div>
               <MineFieldCell
-                key={`${rowindex}-${cellindex}`} cellInfo={cell}
+                key={`${rowindex}-${cellindex}`}
+                cellInfo={cell}
+                updateTag={updateTag}
+                unleashCell={unleashCell}
               />
             )
           })}
@@ -23,7 +50,7 @@ const MineField = ({ gameBoard }) => {
     })
   }
 
-  return (<div className='mine-field'><p>hola</p></div>)
+  return (<div className='mine-field'>{getMinefieldCells()}</div>)
 }
 
 export default MineField

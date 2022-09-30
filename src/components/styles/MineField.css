@@ -1,10 +1,12 @@
 .mine-field {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+	align-items: center;  
 }
 
-.board-row {
-  display: 'flex';
+.mine-field-row {
+  display: flex;
+  justify-content: center;
   align-items: 'center';
-  position: 'relative';
 }

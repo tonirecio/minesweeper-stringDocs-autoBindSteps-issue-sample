@@ -2,10 +2,36 @@
 pink   ff5e6f 
 cream f7e4cb*/
 
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #f7e4cb;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+h1 { 
+	font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", "sans serif"; 
+	font-size: 42px; 
+	font-style: normal; 
+	font-variant: normal; 
+	font-weight: 500; 
+	line-height: 26.4px; 
+	color: #ff5e6f;
+}
+	
 .game {
   background-color: #0a121a;
+  color: #f7e4cb;
 	border-radius: 20px;
 	padding: 15px 15px 30px 15px;
+  text-align: center;
 }
 
 /* .mine-field {

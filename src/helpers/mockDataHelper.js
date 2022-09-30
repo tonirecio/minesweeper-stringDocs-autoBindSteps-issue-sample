@@ -1,3 +1,5 @@
+import { minefieldNumbering, defaultCellValues } from './boardHelper'
+
 function validateMockDataRow (data) {
   const newLocal = '^[*o]*$'
   const regex = new RegExp(newLocal)
@@ -30,5 +32,16 @@ export function validateMockData (data) {
 }
 
 export function createBoardFromMockData (data) {
-  return data.split('-').map((row) => { return row.split('') })
+  const board = []
+  const mockBoard = data.split('-').map((row) => { return row.split('') })
+
+  for (let row = 0; row < mockBoard.length; row += 1) {
+    board.push([])
+    for (let column = 0; column < mockBoard[0].length; column += 1) {
+      board[row].push({ ...defaultCellValues, y: row, x: column, isMine: mockBoard[row][column] === '*' })
+    }
+  }
+  console.log('board', board)
+  minefieldNumbering(board)
+  return board
 }

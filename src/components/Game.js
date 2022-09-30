@@ -1,21 +1,17 @@
 import './styles/Game.css'
 import MineField from './MineField'
-import { validateMockData, createBoardFromMockData } from '../helpers/mockDataHelper'
-import { createBoard } from '../helpers/boardHelper'
 import { useState, useEffect } from 'react'
-import * as APP from '../App.consts'
+
 // import { getByDisplayValue } from '@testing-library/react'
 
-const Game = ({ mockData }) => {
-  const [gameBoard, setGameBoard] = useState([])
+const Game = () => {
+  const [mockData, setMockData] = useState()
 
   useEffect(() => {
-    if (validateMockData(mockData)) {
-      setGameBoard(createBoardFromMockData(mockData))
-    } else {
-      setGameBoard(createBoard(APP.NUMBER_OF_ROWS, APP.NUMBER_OF_COLUMNS, APP.NUMBER_OF_MINES))
-    }
-    console.log('gameboard', gameBoard)
+    const queryString = window.location.search
+    const urlParams = new URLSearchParams(queryString)
+    const urlValue = urlParams.get('mockData')
+    setMockData(urlValue)
   }, [])
 
   return (
@@ -28,7 +24,7 @@ const Game = ({ mockData }) => {
         <div>{/* status */}</div>
         <ol>{/* TODO */}</ol>
       </div>
-      <MineField gameBoard={gameBoard} />
+      <MineField mockData={mockData} />
     </div>
   )
 }
