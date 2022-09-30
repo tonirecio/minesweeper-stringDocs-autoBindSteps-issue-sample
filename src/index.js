@@ -5,9 +5,25 @@ import Game from './components/Game'
 import reportWebVitals from './reportWebVitals'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
+const queryString = window.location.search
+const urlParams = new URLSearchParams(queryString)
+const urlValue = urlParams.get('mockData')
+
+const getGameComponent = (mockData) => {
+  if (urlValue) {
+    return (
+      <Game mockData={urlValue} />
+    )
+  } else {
+    return (
+      <Game />
+    )
+  }
+}
+
 root.render(
   <React.StrictMode>
-    <Game />
+    {getGameComponent(urlValue)}
   </React.StrictMode>
 )
 
