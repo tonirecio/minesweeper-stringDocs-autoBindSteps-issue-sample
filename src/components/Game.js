@@ -3,6 +3,10 @@ import MineField from './MineField'
 // import { useState, useEffect } from 'react'
 
 // import { getByDisplayValue } from '@testing-library/react'
+const loseGame = () => {
+  const status = document.getElementById('status')
+  status.innerHTML = 'GAME OVER'
+}
 
 const Game = ({ mockData }) => {
   return (
@@ -12,10 +16,10 @@ const Game = ({ mockData }) => {
         <p>{mockData}</p>
       </div>
       <div>
-        <div>{/* status */}</div>
+        <div id='status' />
         <ol>{/* TODO */}</ol>
       </div>
-      <MineField mockData={mockData} />
+      <MineField mockData={mockData} loseGame={loseGame} />
     </div>
   )
 }

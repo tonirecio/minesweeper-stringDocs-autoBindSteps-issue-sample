@@ -71,6 +71,8 @@ const MineFieldCell = ({ cellInfo, updateTag, unleashCell }) => {
 
     return (
       <button
+        type='button'
+        data-testid={'cell-row' + cellInfo.y + '-col' + cellInfo.x}
         className='mine-field-cell-button'
         onContextMenu={(e) => updateTag(e, cellInfo.y, cellInfo.x, nextTag)}
         onClick={(e) => unleashCell(e, cellInfo.y, cellInfo.x)}
@@ -82,7 +84,10 @@ const MineFieldCell = ({ cellInfo, updateTag, unleashCell }) => {
 
   const getRevealedCell = (info) => {
     return (
-      <p>{cellInfo.numberOfMinesAround}</p>
+      <p
+        data-testid={'cell-row' + cellInfo.y + '-col' + cellInfo.x}
+      >{cellInfo.numberOfMinesAround}
+      </p>
     )
   }
 

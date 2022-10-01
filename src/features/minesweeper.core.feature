@@ -34,21 +34,8 @@ Scenario: Revealing a cell with a mine - Losing game
   """
   *o
   """
-  When the user uncovers the cell in row "1" column "1"
+  When the user uncovers the cell in row 1 column 1
   Then the user should lose the game
   # And the board should display the following data: "*"
   # And the remaining mines counter should be "1"
   # And the game should be over with the following message: "You lose!"
-
-Scenario: The are no mines on the minefield - Winning game
-  Given the user opens the game loading the following mock data:
-  """
-  o
-  """
-  Then the user should win the game
-  # And the remaining mines counter should be "0"
-  # And the game should be over with the following message: "You win!"
-
-Scenario: Starting game - Hidding mines
-  Given the user opens the game  
-  Then all the cells in the board should be covered

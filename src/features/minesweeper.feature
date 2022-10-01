@@ -14,6 +14,19 @@ Examples:
 | ***-oo*-*** |     7 |
 | ***-*o*-*** |     8 |
 
+Scenario: The are no mines on the minefield - Winning game
+  Given the user opens the game loading the following mock data:
+  """
+  o
+  """
+  Then the user should win the game
+  # And the remaining mines counter should be "0"
+  # And the game should be over with the following message: "You win!"
+
+Scenario: Starting game - Hidding mines
+  Given the user opens the game  
+  Then all the cells in the board should be covered
+  
 Scenario: Tagging a cell as mined 
   Given the board loads the following data: "*"
   When the user tags the cell, on row "1" column "1", as mined

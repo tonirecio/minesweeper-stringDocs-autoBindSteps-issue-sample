@@ -5,7 +5,7 @@ import { validateMockData, createBoardFromMockData } from '../helpers/mockDataHe
 import { createBoard } from '../helpers/boardHelper'
 import * as APP from '../App.consts'
 
-const MineField = ({ mockData }) => {
+const MineField = ({ mockData, loseGame }) => {
   const [gameBoard, setGameBoard] = useState([])
 
   useEffect(() => {
@@ -27,6 +27,9 @@ const MineField = ({ mockData }) => {
     const newBoard = [...gameBoard]
     newBoard[row][column].isRevealed = true
     setGameBoard(newBoard)
+    if (newBoard[row][column].isMine) {
+      loseGame()
+    }
   }
 
   const getMinefieldCells = () => {
