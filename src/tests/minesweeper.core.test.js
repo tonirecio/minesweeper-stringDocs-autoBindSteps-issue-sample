@@ -1,8 +1,6 @@
-// import { expect } from '@testing-library/jest-dom'
-import '@testing-library/jest-dom/extend-expect'
+/* eslint-disable no-undef */
 import * as steps from './steps/minesweeper.core.steps.js'
 import { defineFeature, loadFeature } from 'jest-cucumber'
-// import { expect } from '@testing-library/react'
 const feature = loadFeature('./src/features/minesweeper.core.feature')
 
 defineFeature(feature, test => {
