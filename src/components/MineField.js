@@ -9,12 +9,13 @@ const MineField = ({ mockData, loseGame }) => {
   const [gameBoard, setGameBoard] = useState([])
 
   useEffect(() => {
+    console.log('MineField useEffect')
     if (mockData && validateMockData(mockData)) {
       setGameBoard(createBoardFromMockData(mockData))
     } else {
       setGameBoard(createBoard(APP.NUMBER_OF_ROWS, APP.NUMBER_OF_COLUMNS, APP.NUMBER_OF_MINES))
     }
-  }, [mockData])
+  }, [])
 
   const updateTag = (e, row, column, tag) => {
     e.preventDefault()

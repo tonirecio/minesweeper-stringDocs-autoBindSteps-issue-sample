@@ -4,12 +4,27 @@ import { defineFeature, loadFeature } from 'jest-cucumber'
 const feature = loadFeature('./src/features/minesweeper.core.feature')
 
 defineFeature(feature, test => {
-  test('Revealing a cell with a mine - Losing game', ({ given, when, then }) => {
+  test('Uncovering a cell with the mouse - Disabling the cell', ({ given, when, then }) => {
     given('the user opens the game loading the following mock data:', (mockData) => {
+      console.log('mockData', mockData)
       steps.openTheGameWithMockData(mockData)
     })
-    when(/^the user uncovers the cell in row (.*) column (.*)$/, (row, column) => {
-      steps.uncoverCell(row, column)
+    when(/^the user clicks on the cell ((\d+),(\d+))$/, (row, col) => {
+      steps.uncoverCell(row, col)
+    })
+
+    then('the user should lose the game', () => {
+      expect(steps.isGameOver()).toEqual(true)
+    })
+  })
+
+  test('Uncovering a cell with a mine - Losing game', ({ given, when, then }) => {
+    given('the user opens the game loading the following mock data:', (mockData) => {
+      console.log('mockData', mockData)
+      steps.openTheGameWithMockData(mockData)
+    })
+    when(/^the user uncovers the cell ((\d+),(\d+))$/, (row, col) => {
+      steps.uncoverCell(row, col)
     })
     then('the user should lose the game', () => {
       expect(steps.isGameOver()).toEqual(true)
