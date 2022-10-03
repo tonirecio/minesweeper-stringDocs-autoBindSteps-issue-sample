@@ -29,23 +29,31 @@ rows and columns starts from 1
     "8" Clean cell with 8 adjacent mines
     "9" Clean cell with 9 adjacent mines
 
+Background: 
+  Given the player opens the game 
+          
 Scenario: Uncovering a cell with the mouse - Disabling the cell
-  Given the user opens the game loading the following mock data:
+  Given the player loads the following mock data:
   """
-  | * | o |
-  | o | o |
+  | * | o |  
   """
-  When the user clicks on the cell (1,1)
-  Then the cell (1,1) should be disabled
+  When the player clicks on the cell (1,2)
+  Then the cell (1,2) should be disabled
 
 
 Scenario: Uncovering a cell with a mine - Losing game
-  Given the user opens the game loading the following mock data:
+  Given the player loads the following mock data:
   """
   | * | o |
   """
-  When the user uncovers the cell (1,1)
-  Then the user should lose the game
+  When the player uncovers the cell (1,1)
+  Then the player should lose the game
+
+#  When the user uncovers the cell (1,1)
+#  Then the user should lose the game
+
+
+
   # And the board should display the following data: "*"
   # And the remaining mines counter should be "1"
   # And the game should be over with the following message: "You lose!"

@@ -84,9 +84,8 @@ const MineFieldCell = ({ cellInfo, updateTag, unleashCell }) => {
 
   const getRevealedCell = (info) => {
     return (
-      <p
-        data-testid={'cell-row' + cellInfo.y + '-col' + cellInfo.x}
-      >{cellInfo.numberOfMinesAround}
+      <p data-testid={'cell-row' + cellInfo.y + '-col' + cellInfo.x}>
+        {cellInfo.numberOfMinesAround}
       </p>
     )
   }

@@ -1,12 +1,12 @@
 import { minefieldNumbering, defaultCellValues } from './boardHelper'
 
-function validateMockDataRow (data) {
+const validateMockDataRow = (data) => {
   const newLocal = '^[*o]*$'
   const regex = new RegExp(newLocal)
   return regex.test(data)
 }
 
-function validateMockDataRows (dataRows) {
+const validateMockDataRows = (dataRows) => {
   const currentLenght = dataRows[0].length
   let isValidData
   for (let i = 1; i < dataRows.length; i += 1) {
@@ -19,7 +19,17 @@ function validateMockDataRows (dataRows) {
   return isValidData
 }
 
-export function validateMockData (data) {
+export const parseMockDataToString = (data) => {
+  let strData = data.split(/\r?\n/).join('-')
+  strData = strData.replaceAll(' ', '')
+  strData = strData.replaceAll('|', '')
+  while (strData[strData.length - 1] === '-') {
+    strData = strData.slice(0, -1)
+  }
+  return strData
+}
+
+export const validateMockData = (data) => {
   let isValidData
   if (data === undefined) {
     isValidData = false
@@ -31,7 +41,7 @@ export function validateMockData (data) {
   return isValidData
 }
 
-export function createBoardFromMockData (data) {
+export const createBoardFromMockData = (data) => {
   const board = []
   const mockBoard = data.split('-').map((row) => { return row.split('') })
 

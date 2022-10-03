@@ -5,10 +5,11 @@ import { useState } from 'react'
 // import { getByDisplayValue } from '@testing-library/react'
 
 const MockDataLoader = ({ getData }) => {
-  const [mockData, setMockData] = useState([])
+  const [mockData, setMockData] = useState('**-oo')
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    console.log('MockData ************************************: ', mockData)
     getData(mockData)
   }
 
@@ -20,16 +21,17 @@ const MockDataLoader = ({ getData }) => {
     <div className='mockDataLoader'>
       <form onSubmit={handleSubmit}>
         <div>
-          <input
+          <textarea
             type='text'
             value={mockData}
             cols='40'
             rows='8'
             onChange={handleInputChange}
+            data-testid='mockDataLoader-textarea'
             style={{ width: '100%', height: '300px' }}
           />
         </div>
-        <button>Load</button>
+        <button data-testid='mockDataLoader-loadButton'>Load</button>
       </form>
     </div>
   )

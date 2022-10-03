@@ -15,7 +15,7 @@ const MineField = ({ mockData, loseGame }) => {
     } else {
       setGameBoard(createBoard(APP.NUMBER_OF_ROWS, APP.NUMBER_OF_COLUMNS, APP.NUMBER_OF_MINES))
     }
-  }, [])
+  }, [mockData])
 
   const updateTag = (e, row, column, tag) => {
     e.preventDefault()

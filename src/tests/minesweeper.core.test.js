@@ -1,33 +1,47 @@
-/* eslint-disable no-undef */
-import * as steps from './steps/minesweeper.core.steps.js'
 import { defineFeature, loadFeature } from 'jest-cucumber'
+import * as steps from './steps/minesweeper.core.steps.js'
+
 const feature = loadFeature('./src/features/minesweeper.core.feature')
 
 defineFeature(feature, test => {
   test('Uncovering a cell with the mouse - Disabling the cell', ({ given, when, then }) => {
-    given('the user opens the game loading the following mock data:', (mockData) => {
-      console.log('mockData', mockData)
-      steps.openTheGameWithMockData(mockData)
+    given('the player opens the game', () => {
+      steps.openTheGame()
     })
-    when(/^the user clicks on the cell ((\d+),(\d+))$/, (row, col) => {
+    given('the player loads the following mock data:', (mockData) => {
+      steps.loadMockData(mockData)
+    })
+    when(/^the player clicks on the cell \((\d+),(\d+)\)$/, (row, col) => {
       steps.uncoverCell(row, col)
     })
-
-    then('the user should lose the game', () => {
-      expect(steps.isGameOver()).toEqual(true)
+    then(/^the cell \((\d+),(\d+)\) should be disabled$/, (row, col) => {
+      steps.isUncover(row, col)
     })
   })
 
   test('Uncovering a cell with a mine - Losing game', ({ given, when, then }) => {
-    given('the user opens the game loading the following mock data:', (mockData) => {
-      console.log('mockData', mockData)
-      steps.openTheGameWithMockData(mockData)
+    given('the player opens the game', () => {
+      console.log('1')
+      steps.openTheGame()
+      console.log('2')
     })
-    when(/^the user uncovers the cell ((\d+),(\d+))$/, (row, col) => {
+    given('the player loads the following mock data:', (mockData) => {
+      console.log('3')
+      steps.loadMockData(mockData)
+      console.log('4')
+    })
+    when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
+      console.log('5')
       steps.uncoverCell(row, col)
+      console.log('6')
     })
-    then('the user should lose the game', () => {
-      expect(steps.isGameOver()).toEqual(true)
+    then('the player should lose the game', async () => {
+      // const welcomeElement = screen.getByText('GAME OVER')
+      console.log('7')
+      // expect(await steps.isGameOver()).toEqual(true)
+      // expect(steps.isUncover(1, 1)).toEqual(true)
+      await steps.isGameOver()
+      console.log('8')
     })
   })
 

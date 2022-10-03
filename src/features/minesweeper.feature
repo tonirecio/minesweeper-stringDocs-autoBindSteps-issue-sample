@@ -91,7 +91,7 @@ Examples:
 Scenario: Reavealing a cell with no adjacent mines -> Revealing adjacent cells (recursively)
   Given the board loads the following data
   """
-  oooooo
+  | o  | o | o | o | o | o |
   **oooo
   oooooo
   oooooo
@@ -101,7 +101,7 @@ Scenario: Reavealing a cell with no adjacent mines -> Revealing adjacent cells (
   When the user reveals the cell on row "4" column "4"
   Then the board should display the following data
   """
-  ..1000
+  | . | . | 1 | 0 | 0 | 0 |
   ..1000
   221000
   000000
