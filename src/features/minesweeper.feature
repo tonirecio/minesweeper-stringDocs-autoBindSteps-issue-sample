@@ -22,9 +22,7 @@ Examples:
 | ***-oo*-*** |     7 |
 | ***-*o*-*** |     8 |
 
-Scenario: Starting game - Hidding mines
-  Given the user opens the game  
-  Then all the cells in the board should be covered
+
   
 Scenario: Tagging a cell as mined 
   Given the board loads the following data: "*"

@@ -4,6 +4,12 @@ import * as steps from './steps/minesweeper.core.steps.js'
 const feature = loadFeature('./src/features/minesweeper.core.feature')
 
 defineFeature(feature, test => {
+  test('Starting game - All the cells should be hidden', ({ then }) => {
+    then('all the cells should be covered ', () => {
+      // steps.isUncovered(row, col)
+    })
+  })
+
   test('Uncovering a cell with the mouse - Disabling the cell', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()

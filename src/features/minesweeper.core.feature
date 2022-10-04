@@ -44,7 +44,10 @@ Feature: Minesweeper
       "9" Clean cell with 9 adjacent mines
 
 Background: 
-  Given the player opens the game 
+  Given the player opens the game
+
+Scenario: Starting game - All the cells should be hidden  
+  Then all the cells should be covered 
           
 Scenario: Uncovering a cell with the mouse - Disabling the cell
   Given the player loads the following mock data:
