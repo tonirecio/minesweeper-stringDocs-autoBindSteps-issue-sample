@@ -15,33 +15,37 @@ defineFeature(feature, test => {
       steps.uncoverCell(row, col)
     })
     then(/^the cell \((\d+),(\d+)\) should be disabled$/, (row, col) => {
-      steps.isUncover(row, col)
+      steps.isUncovered(row, col)
     })
   })
 
-  test('Uncovering a cell with a mine - Losing game', ({ given, when, then }) => {
+  test('Uncovering a cell with a mine - Losing the game', ({ given, when, then }) => {
     given('the player opens the game', () => {
-      console.log('1')
       steps.openTheGame()
-      console.log('2')
     })
     given('the player loads the following mock data:', (mockData) => {
-      console.log('3')
       steps.loadMockData(mockData)
-      console.log('4')
     })
     when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
-      console.log('5')
       steps.uncoverCell(row, col)
-      console.log('6')
     })
     then('the player should lose the game', async () => {
-      // const welcomeElement = screen.getByText('GAME OVER')
-      console.log('7')
-      // expect(await steps.isGameOver()).toEqual(true)
-      // expect(steps.isUncover(1, 1)).toEqual(true)
       await steps.isGameOver()
-      console.log('8')
+    })
+  })
+
+  test('Uncovering a cell with no mine - Displaying the number of adjacent mines', ({ given, when, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given(/^the player loads the following mock data: (.*)$/, (mockData) => {
+      steps.loadMockData(mockData)
+    })
+    when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
+      steps.uncoverCell(row, col)
+    })
+    then(/^the cell \((\d+),(\d+)\) should show the following value: (.*)$/, async (row, col, number) => {
+      await steps.isValueInTheCell(row, col, number)
     })
   })
 

@@ -1,19 +1,3 @@
-Scenario Outline: Displaying the number of mines
-  When the board loads the following data: "<boardData>"
-  Then the remaining mines counter should be "<mines>"
-
-Examples:
-| boardData   | mines |
-| ooo-ooo-ooo |     0 |
-| o*o-ooo-ooo |     1 |
-| o*o-ooo-oo* |     2 |
-| o*o-ooo-*o* |     3 |
-| *o*-ooo-*o* |     4 |
-| ***-*o*-ooo |     5 |
-| *o*-*o*-*o* |     6 |
-| ***-oo*-*** |     7 |
-| ***-*o*-*** |     8 |
-
 Scenario: The are no mines on the minefield - Winning game
   Given the user opens the game loading the following mock data:
   """
@@ -22,6 +6,21 @@ Scenario: The are no mines on the minefield - Winning game
   Then the user should win the game
   # And the remaining mines counter should be "0"
   # And the game should be over with the following message: "You win!"
+
+Scenario Outline: Default values - Showing the number of hidden mines in the non-tagged mines counter
+  When the player loads the following mock data: "<boardData>"
+  Then the non-tagged mines counter should be "<mines>"
+
+Examples:
+| boardData   | mines |
+| o*o-ooo-ooo |     1 |
+| o*o-ooo-oo* |     2 |
+| o*o-ooo-*o* |     3 |
+| *o*-ooo-*o* |     4 |
+| ***-*o*-ooo |     5 |
+| *o*-*o*-*o* |     6 |
+| ***-oo*-*** |     7 |
+| ***-*o*-*** |     8 |
 
 Scenario: Starting game - Hidding mines
   Given the user opens the game  
@@ -72,21 +71,7 @@ Scenario: Showing all mines when the user lose the game
   And the user reveals the cell on row "1" column "1"
   Then the board should display the following data: "*.-**"
 
-Scenario: Revealing a cell with no mine - The cell will display the number of adjacent mines
-  Given the board loads the following data: "<boardData>"
-  When the user reveals the cell on row "2" column "2"
-  Then the board should display the following data: "<boardDisplay>"  
 
-Examples:
-| boardData   | boardDisplay |
-| o*o-ooo-ooo | ...-.1.-...  |
-| o*o-ooo-oo* | ...-.2.-...  |
-| o*o-ooo-*o* | ...-.3.-...  |
-| *o*-ooo-*o* | ...-.4.-...  |
-| ***-*o*-ooo | ...-.5.-...  |
-| *o*-*o*-*o* | ...-.6.-...  |
-| ***-oo*-*** | ...-.7.-...  |
-| ***-*o*-*** | ...-.8.-...  |
 
 Scenario: Reavealing a cell with no adjacent mines -> Revealing adjacent cells (recursively)
   Given the board loads the following data
