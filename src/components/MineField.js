@@ -54,7 +54,14 @@ const MineField = ({ mockData, loseGame }) => {
     })
   }
 
-  return (<div className='mine-field'>{getMinefieldCells()}</div>)
+  return (
+    <div
+      className='mine-field'
+      data-testid='mine-field'
+    >
+      {getMinefieldCells()}
+    </div>
+  )
 }
 
 export default MineField

@@ -2,6 +2,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Game from '../../components/Game'
+import APP from '../../App.consts'
 
 export const openTheGame = () => {
   render(<Game />)
@@ -41,6 +42,12 @@ export const isValueInTheCell = async (row, col, value) => {
   const cell = screen.getByTestId('cell-row' + numRow + '-col' + numCol)
 
   expect(cell).toHaveTextContent(value)
+}
+
+export const areAllCellsCovered = () => {
+  const mineField = screen.getByTestId('mine-field')
+  const cells = mineField.querySelectorAll('.mine-field-cell-button')
+  return cells.length === APP.MINEFIELD_ROWS * APP.MINEFIELD_COLS
 }
 
 // const doLogin = (user, password) => {

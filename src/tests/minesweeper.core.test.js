@@ -1,12 +1,46 @@
-import { defineFeature, loadFeature } from 'jest-cucumber'
+// import { loadFeatures, autoBindSteps } from 'jest-cucumber'
+import { loadFeature, defineFeature } from 'jest-cucumber'
 import * as steps from './steps/minesweeper.core.steps.js'
+// const features = loadFeatures('./src/features/**/*.feature')
+
+// const stepsRef = ({ given, and, when, then }) => {
+//   given('the player opens the game', () => {
+//     steps.openTheGame()
+//   })
+//   then('all the cells should be covered', () => {
+//     // steps.isUncovered(row, col)
+//   })
+//   given(/^the player loads the following mock data: (.*)$/, (mockData) => {
+//     steps.loadMockData(mockData)
+//   })
+//   when(/^the player clicks on the cell \((\d+),(\d+)\)$/, (row, col) => {
+//     steps.uncoverCell(row, col)
+//   })
+//   then(/^the cell \((\d+),(\d+)\) should be disabled$/, (row, col) => {
+//     steps.isUncovered(row, col)
+//   })
+//   when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
+//     steps.uncoverCell(row, col)
+//   })
+//   then(/^the cell \((\d+),(\d+)\) should show the following value: (.*)$/, (row, col, value) => {
+//     // steps.isValueInTheCell(row, col, value)
+//   })
+//   then('the player should lose the game', async () => {
+//     await steps.isGameOver()
+//   })
+// }
+
+// autoBindSteps(features, [stepsRef])
 
 const feature = loadFeature('./src/features/minesweeper.core.feature')
 
 defineFeature(feature, test => {
-  test('Starting game - All the cells should be hidden', ({ then }) => {
-    then('all the cells should be covered ', () => {
-      // steps.isUncovered(row, col)
+  test('Starting game - All the cells should be hidden', ({ given, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    then('all the cells should be covered', () => {
+      steps.areAllCellsCovered()
     })
   })
 
