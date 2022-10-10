@@ -9,7 +9,6 @@ const MockDataLoader = ({ getData }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('MockData ************************************: ', mockData)
     getData(mockData)
   }
 

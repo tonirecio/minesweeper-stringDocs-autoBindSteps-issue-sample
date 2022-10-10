@@ -57,6 +57,13 @@ Scenario: Uncovering a cell with the mouse - Disabling the cell
   When the player clicks on the cell (1,2)
   Then the cell (1,2) should be disabled
 
+Scenario: Uncovering a cell - Disabling the cell
+  Given the player loads the following mock data:
+  """
+  | * | o |  
+  """
+  When the player uncovers the cell (1,2)
+  Then the cell (1,2) should be disabled
 
 Scenario: Uncovering a cell with a mine - Losing the game
   Given the player loads the following mock data:
@@ -65,6 +72,14 @@ Scenario: Uncovering a cell with a mine - Losing the game
   """
   When the player uncovers the cell (1,1)
   Then the player should lose the game
+
+  Scenario: Uncovering a cell with a mine - Showing a highlighted mine
+  Given the player loads the following mock data:
+  """
+  | * | o |
+  """
+  When the player uncovers the cell (1,1)
+  Then the cell (1,1) should show: a highlighted mine
 
 Scenario Outline: Uncovering a cell with no mine - Displaying the number of adjacent mines
   Given the player loads the following mock data: <boardData>
@@ -82,6 +97,39 @@ Examples:
 | ***-oo*-*** | 7      |
 | ***-*o*-*** | 8      |
 
+Scenario Outline: Uncovering a cell with no mine or mines around it - Displaying an empty cell
+  Given the player loads the following mock data:
+  """
+  | o | o | o |
+  | o | o | o |
+  | o | o | o |
+  | * | * | * |
+  """
+  When the player uncovers the cell (<row>,<column>)
+  Then the cell (<row>,<column>) should be displayed empty
+
+  Examples:
+  | row | column |
+  | 1   | 1      |
+  | 1   | 3      |
+  | 2   | 2      |
+
+Scenario: Uncovering an empty cell - Uncovering neighbor cells
+  Given the player loads the following mock data:
+  """
+  | o | o | o |
+  | o | o | o |
+  | o | o | o |
+  | * | * | * |
+  """
+  When the player uncovers the cell (2,2)
+  Then the minefield should look like this:
+  """
+  | 0 | 0 | 0 |
+  | 0 | 0 | 0 |
+  | 2 | 3 | 2 |
+  | . | . | . |
+  """
 
   # And the board should display the following data: "*"
   # And the remaining mines counter should be "1"

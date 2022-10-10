@@ -12,14 +12,12 @@ const Game = () => {
   const [isMockMode, setMockMode] = useState(false)
 
   const handleKeyPress = (event) => {
-    console.log('event -------------------------------------------', event)
     if (event.ctrlKey === true && event.key.toUpperCase() === 'M') {
       setMockMode(!isMockMode)
     }
   }
 
   const loseGame = () => {
-    console.log('GAME OVER ************************************')
     setGameStatus('GAME OVER')
   }
 
@@ -39,7 +37,6 @@ const Game = () => {
     }
   }, [handleKeyPress])
 
-  console.log('MockData: ', mockData)
   return (
     <div className='game' data-testid='game'>
       <div><h1>The React Minesweeper</h1></div>

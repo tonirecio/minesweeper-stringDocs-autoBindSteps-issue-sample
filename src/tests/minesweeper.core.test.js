@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // import { loadFeatures, autoBindSteps } from 'jest-cucumber'
 import { loadFeature, defineFeature } from 'jest-cucumber'
 import * as steps from './steps/minesweeper.core.steps.js'
@@ -40,7 +41,7 @@ defineFeature(feature, test => {
       steps.openTheGame()
     })
     then('all the cells should be covered', () => {
-      steps.areAllCellsCovered()
+      expect(steps.areAllCellsCovered()).toBe(true)
     })
   })
 
@@ -52,10 +53,25 @@ defineFeature(feature, test => {
       steps.loadMockData(mockData)
     })
     when(/^the player clicks on the cell \((\d+),(\d+)\)$/, (row, col) => {
-      steps.uncoverCell(row, col)
+      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
     })
     then(/^the cell \((\d+),(\d+)\) should be disabled$/, (row, col) => {
-      steps.isUncovered(row, col)
+      expect(steps.isUncovered(Number(row) - 1, Number(col) - 1)).toBe(true)
+    })
+  })
+
+  test('Uncovering a cell - Disabling the cell', ({ given, when, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given('the player loads the following mock data:', (mockData) => {
+      steps.loadMockData(mockData)
+    })
+    when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
+      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+    })
+    then(/^the cell \((\d+),(\d+)\) should be disabled$/, (row, col) => {
+      expect(steps.isUncovered(Number(row) - 1, Number(col) - 1)).toBe(true)
     })
   })
 
@@ -67,10 +83,10 @@ defineFeature(feature, test => {
       steps.loadMockData(mockData)
     })
     when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
-      steps.uncoverCell(row, col)
+      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
     })
-    then('the player should lose the game', async () => {
-      await steps.isGameOver()
+    then('the player should lose the game', () => {
+      expect(steps.isGameOver()).toBe(true)
     })
   })
 
@@ -82,10 +98,55 @@ defineFeature(feature, test => {
       steps.loadMockData(mockData)
     })
     when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
-      steps.uncoverCell(row, col)
+      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
     })
-    then(/^the cell \((\d+),(\d+)\) should show the following value: (.*)$/, async (row, col, number) => {
-      await steps.isValueInTheCell(row, col, number)
+    then(/^the cell \((\d+),(\d+)\) should show the following value: (.*)$/, (row, col, number) => {
+      expect(steps.isValueInTheCell(Number(row) - 1, Number(col) - 1, number)).toBe(true)
+    })
+  })
+
+  test('Uncovering a cell with no mine or mines around it - Displaying an empty cell', ({ given, when, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given('the player loads the following mock data:', (mockData) => {
+      steps.loadMockData(mockData)
+    })
+    when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
+      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+    })
+    then(/^the cell \((.*),(.*)\) should be displayed empty$/, (row, col) => {
+      expect(steps.isValueInTheCell(Number(row) - 1, Number(col) - 1, '')).toBe(true)
+    })
+  })
+
+  test('Uncovering a cell with a mine - Showing a highlighted mine', ({ given, when, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given('the player loads the following mock data:', (mockData) => {
+      steps.loadMockData(mockData)
+    })
+    when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
+      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+    })
+    then(/^the cell \((\d+),(\d+)\) should show: (.*)$/, (row, col, element) => {
+      expect(steps.isCellShowingA(Number(row) - 1, Number(col) - 1, element)).toBe(true)
+    })
+  })
+
+  test('Uncovering an empty cell - Uncovering neighbor cells', ({ given, when, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given('the player loads the following mock data:', (mockData) => {
+      steps.loadMockData(mockData)
+    })
+    when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
+      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+    })
+    then('the minefield should look like this:', (expectedMineFieldStatus) => {
+      expect(steps.isMineFieldLookLike(expectedMineFieldStatus)).toBe(true)
     })
   })
 

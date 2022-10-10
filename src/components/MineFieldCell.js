@@ -4,7 +4,7 @@ import './styles/MineFieldCell.css'
 // import mineImage from './resources/mine.svg'
 import flagImage from './resources/flag.svg'
 import questionImage from './resources/question.svg'
-// import explosionImage from './resources/explosion.svg'
+import explosionImage from './resources/explosion.svg'
 
 // const MineFieldCell = ({ cellInfo, updateFlag, revealCell }) => {
 const MineFieldCell = ({ cellInfo, updateTag, unleashCell }) => {
@@ -82,10 +82,20 @@ const MineFieldCell = ({ cellInfo, updateTag, unleashCell }) => {
     )
   }
 
-  const getRevealedCell = (info) => {
+  const getRevealedCellContent = () => {
+    if (cellInfo.isMine) {
+      return <img className='mine-field-cell-image' src={explosionImage} alt='' />
+    } else if (cellInfo.numberOfMinesAround > 0) {
+      return cellInfo.numberOfMinesAround
+    } else {
+      return ''
+    }
+  }
+
+  const getRevealedCell = () => {
     return (
       <p data-testid={'cell-row' + cellInfo.y + '-col' + cellInfo.x}>
-        {cellInfo.numberOfMinesAround}
+        {getRevealedCellContent()}
       </p>
     )
   }

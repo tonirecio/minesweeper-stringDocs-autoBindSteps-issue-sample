@@ -9,7 +9,6 @@ const MineField = ({ mockData, loseGame }) => {
   const [gameBoard, setGameBoard] = useState([])
 
   useEffect(() => {
-    console.log('MineField useEffect')
     if (mockData && validateMockData(mockData)) {
       setGameBoard(createBoardFromMockData(mockData))
     } else {
@@ -24,12 +23,23 @@ const MineField = ({ mockData, loseGame }) => {
     setGameBoard(newBoard)
   }
 
-  const unleashCell = (e, row, column) => {
-    const newBoard = [...gameBoard]
-    newBoard[row][column].isRevealed = true
-    setGameBoard(newBoard)
-    if (newBoard[row][column].isMine) {
-      loseGame()
+  const unleashCell = (e, row, col) => {
+    if (!gameBoard[row][col].isRevealed) {
+      const newBoard = [...gameBoard]
+      newBoard[row][col].isRevealed = true
+      setGameBoard(newBoard)
+      if (newBoard[row][col].isMine) {
+        loseGame()
+      } else if (newBoard[row][col].numberOfMinesAround === 0) {
+        if (row > 0 && col > 0) unleashCell(e, row - 1, col - 1)
+        if (row > 0) unleashCell(e, row - 1, col)
+        if (row > 0 && col + 1 < newBoard[0].length) unleashCell(e, row - 1, col + 1)
+        if (col > 0) unleashCell(e, row, col - 1)
+        if (col + 1 < newBoard[0].length) unleashCell(e, row, col + 1)
+        if (row + 1 < newBoard.length && col > 0) unleashCell(e, row + 1, col - 1)
+        if (row + 1 < newBoard.length) unleashCell(e, row + 1, col)
+        if (row + 1 < newBoard.length && col + 1 < newBoard[0].length) unleashCell(e, row + 1, col + 1)
+      }
     }
   }
 

@@ -1,14 +1,14 @@
-/* eslint-disable no-undef */
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Game from '../../components/Game'
-import APP from '../../App.consts'
+import * as APP from '../../App.consts'
+import { parseMockDataToString } from '../../helpers/mockDataHelper'
 
 export const openTheGame = () => {
   render(<Game />)
 }
 
-export const loadMockData = async (mockData) => {
+export const loadMockData = (mockData) => {
   userEvent.keyboard('{ctrl}m')
   const text = screen.getByTestId('mockDataLoader-textarea')
   const button = screen.getByTestId('mockDataLoader-loadButton')
@@ -19,35 +19,73 @@ export const loadMockData = async (mockData) => {
 }
 
 export const uncoverCell = (row, col) => {
-  const numRow = Number(row) - 1
-  const numCol = Number(col) - 1
-  userEvent.click(screen.getByTestId('cell-row' + numRow + '-col' + numCol))
+  userEvent.click(screen.getByTestId('cell-row' + row + '-col' + col))
 }
 
-export const isGameOver = async () => {
-  expect(await screen.findByText('GAME OVER')).toBeVisible()
+export const isGameOver = () => {
+  return screen.getByTestId('game-status').textContent === APP.GAME_STATUS_GAME_OVER
 }
 
 export const isUncovered = (row, col) => {
-  const numRow = Number(row) - 1
-  const numCol = Number(col) - 1
-  const cell = screen.getByTestId('cell-row' + numRow + '-col' + numCol)
-  const button = cell.querySelector('button')
-  expect(!button).toBe(true)
+  const cell = screen.getByTestId('cell-row' + row + '-col' + col)
+  // const button = cell.querySelector('button')
+  return cell.nodeName !== 'BUTTON'
 }
 
-export const isValueInTheCell = async (row, col, value) => {
-  const numRow = Number(row) - 1
-  const numCol = Number(col) - 1
-  const cell = screen.getByTestId('cell-row' + numRow + '-col' + numCol)
+export const isValueInTheCell = (row, col, value) => {
+  const cell = screen.getByTestId('cell-row' + row + '-col' + col)
+  return cell.innerHTML === value
+}
 
-  expect(cell).toHaveTextContent(value)
+export const isCellShowingA = (row, col, element) => {
+  let cellValue
+  let result = false
+  const cell = screen.getByTestId('cell-row' + row + '-col' + col)
+  switch (element) {
+    case '.':
+      result = !isUncovered(row, col)
+      break
+    case '0':
+      cellValue = cell.innerHTML
+      result = cellValue === ''
+      break
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+    case '5':
+    case '6':
+    case '7':
+    case '8':
+      cellValue = cell.innerHTML
+      result = cellValue === element
+      break
+    case 'a highlighted mine':
+      cellValue = cell.querySelector('img')
+      result = cellValue.src.includes('explosion.svg')
+      break
+    default :
+  }
+  return result
 }
 
 export const areAllCellsCovered = () => {
   const mineField = screen.getByTestId('mine-field')
   const cells = mineField.querySelectorAll('.mine-field-cell-button')
-  return cells.length === APP.MINEFIELD_ROWS * APP.MINEFIELD_COLS
+  return cells.length === APP.NUMBER_OF_ROWS * APP.NUMBER_OF_COLUMNS
+}
+
+export const isMineFieldLookLike = (expectedMineFieldStatus) => {
+  const strData = parseMockDataToString(expectedMineFieldStatus)
+  const mineField = strData.split('-').map((row) => { return row.split('') })
+  for (let row = 0; row < mineField.length; row++) {
+    for (let col = 0; col < mineField[0].length; col++) {
+      if (!isCellShowingA(row, col, mineField[row][col])) {
+        return false
+      }
+    }
+  }
+  return true
 }
 
 // const doLogin = (user, password) => {
