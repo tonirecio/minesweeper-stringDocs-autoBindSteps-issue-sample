@@ -5,7 +5,7 @@ import { validateMockData, createBoardFromMockData } from '../helpers/mockDataHe
 import { createBoard } from '../helpers/boardHelper'
 import * as APP from '../App.consts'
 
-const MineField = ({ mockData, loseGame }) => {
+const MineField = ({ mockData, loseGame, winGame }) => {
   const [gameBoard, setGameBoard] = useState([])
 
   useEffect(() => {
@@ -15,6 +15,35 @@ const MineField = ({ mockData, loseGame }) => {
       setGameBoard(createBoard(APP.NUMBER_OF_ROWS, APP.NUMBER_OF_COLUMNS, APP.NUMBER_OF_MINES))
     }
   }, [mockData])
+
+  const disableAllCells = () => {
+    const newBoard = [...gameBoard]
+    for (let row = 0; row < newBoard.length; row++) {
+      for (let col = 0; col < newBoard[0].length; col++) {
+        console.log('disbale cell', row, col)
+        newBoard[row][col].isEnabled = false
+      }
+    }
+    setGameBoard(newBoard)
+  }
+
+  const handleLoseGame = () => {
+    disableAllCells()
+    loseGame()
+  }
+
+  const handleWinGame = () => {
+    disableAllCells()
+    winGame()
+  }
+
+  const areAllCellsWithoutMineUnconvered = () => {
+    const result = gameBoard.every(
+      row => row.every(
+        cell => (cell.isMine === false && cell.isRevealed === true) ||
+         (cell.isMine === true && cell.isRevealed === false)))
+    return result
+  }
 
   const updateTag = (e, row, column, tag) => {
     e.preventDefault()
@@ -29,7 +58,7 @@ const MineField = ({ mockData, loseGame }) => {
       newBoard[row][col].isRevealed = true
       setGameBoard(newBoard)
       if (newBoard[row][col].isMine) {
-        loseGame()
+        handleLoseGame()
       } else if (newBoard[row][col].numberOfMinesAround === 0) {
         if (row > 0 && col > 0) unleashCell(e, row - 1, col - 1)
         if (row > 0) unleashCell(e, row - 1, col)
@@ -39,6 +68,9 @@ const MineField = ({ mockData, loseGame }) => {
         if (row + 1 < newBoard.length && col > 0) unleashCell(e, row + 1, col - 1)
         if (row + 1 < newBoard.length) unleashCell(e, row + 1, col)
         if (row + 1 < newBoard.length && col + 1 < newBoard[0].length) unleashCell(e, row + 1, col + 1)
+      }
+      if (areAllCellsWithoutMineUnconvered()) {
+        handleWinGame()
       }
     }
   }

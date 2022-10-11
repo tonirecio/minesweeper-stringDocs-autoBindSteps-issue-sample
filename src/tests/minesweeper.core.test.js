@@ -176,6 +176,37 @@ defineFeature(feature, test => {
       expect(steps.isCellShowingA(Number(row) - 1, Number(col) - 1, '.')).toBe(true)
     })
   })
+
+  test('Discovering all the cells without mines - Winning the game', ({ given, when, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given('the player loads the following mock data:', (mockData) => {
+      steps.loadMockData(mockData)
+    })
+    when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
+      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+    })
+    then('the player should win the game', () => {
+      expect(steps.isGameWon()).toBe(true)
+    })
+  })
+
+  test('Finishing game, disabling all the cells', ({ given, when, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given('the player loads the following mock data:', (mockData) => {
+      steps.loadMockData(mockData)
+    })
+    when(/^the player uncovers the cell \((.*),(.*)\)$/, (row, col) => {
+      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+    })
+    then('all the cells should be disabled', () => {
+      expect(steps.areAllCellsEnabledIs(false)).toBe(true)
+    })
+  })
+
   // test('The are no mines on the minefield - Winning game', ({
   //   given,
   //   then

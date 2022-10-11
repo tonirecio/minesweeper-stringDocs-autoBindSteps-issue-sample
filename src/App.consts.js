@@ -4,6 +4,7 @@ export const NUMBER_OF_ROWS = 8
 export const NUMBER_OF_COLUMNS = 8
 export const NUMBER_OF_MINES = 10
 export const GAME_STATUS_GAME_OVER = 'GAME OVER'
+export const GAME_STATUS_GAME_WON = 'GAME WON'
 
 export const COLORS = {
   olive: '#4e6659',

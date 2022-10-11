@@ -141,3 +141,24 @@ Scenario: Untagging the mined tag - Removing the mined symbol
   Given When the player tags as "mined" the cell (1,1)
   When the player untags the cell (1,1)
   Then the cell (1,1) should not show a "mined" symbol
+
+Scenario: Discovering all the cells without mines - Winning the game  
+  Given the player loads the following mock data:
+  """
+  | * | o |
+  """
+  When the player uncovers the cell (1,2)
+  Then the player should win the game
+
+Scenario Outline: Finishing game, disabling all the cells
+  Given the player loads the following mock data:
+  """
+  | * | o |  
+  """
+  When the player uncovers the cell (<row>,<col>)
+  Then all the cells should be disabled
+ 
+  Examples:
+  | row | col |
+  | 1   | 1   |
+  | 1   | 2   |

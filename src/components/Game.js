@@ -21,6 +21,10 @@ const Game = () => {
     setGameStatus('GAME OVER')
   }
 
+  const winGame = () => {
+    setGameStatus('GAME WON')
+  }
+
   const getData = (data) => {
     const strData = parseMockDataToString(data)
     setMockData(strData)
@@ -47,7 +51,7 @@ const Game = () => {
         <p id='game-status' data-testid='game-status'>{gameStatus}</p>
       </div>
       {isMockMode ? <MockDataLoader getData={getData} /> : <div />}
-      <MineField mockData={mockData} loseGame={loseGame} />
+      <MineField mockData={mockData} loseGame={loseGame} winGame={winGame} />
     </div>
   )
 }

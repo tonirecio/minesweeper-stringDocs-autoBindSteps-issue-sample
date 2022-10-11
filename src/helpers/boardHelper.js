@@ -37,6 +37,7 @@ export const defaultCellValues = {
   y: 0,
   x: 0,
   isRevealed: false,
+  isEnabled: true,
   userTag: '',
   isMine: false,
   numberOfMinesAround: 0

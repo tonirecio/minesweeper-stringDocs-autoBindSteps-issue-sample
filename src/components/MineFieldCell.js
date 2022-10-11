@@ -55,7 +55,7 @@ const MineFieldCell = ({ cellInfo, updateTag, unleashCell }) => {
       })
 */
 
-  const getHiddenCell = (tag) => {
+  const getCoveredCell = (tag) => {
     let imgSrc
     let nextTag = 'mined'
 
@@ -72,6 +72,7 @@ const MineFieldCell = ({ cellInfo, updateTag, unleashCell }) => {
     return (
       <button
         type='button'
+        disabled={!cellInfo.isEnabled}
         data-testid={'cell-row' + cellInfo.y + '-col' + cellInfo.x}
         className='mine-field-cell-button'
         onContextMenu={(e) => updateTag(e, cellInfo.y, cellInfo.x, nextTag)}
@@ -82,7 +83,7 @@ const MineFieldCell = ({ cellInfo, updateTag, unleashCell }) => {
     )
   }
 
-  const getRevealedCellContent = () => {
+  const getDiscoveredCellContent = () => {
     if (cellInfo.isMine) {
       return <img className='mine-field-cell-image' src={explosionImage} alt='' />
     } else if (cellInfo.numberOfMinesAround > 0) {
@@ -92,17 +93,17 @@ const MineFieldCell = ({ cellInfo, updateTag, unleashCell }) => {
     }
   }
 
-  const getRevealedCell = () => {
+  const getDiscoveredCell = () => {
     return (
       <p data-testid={'cell-row' + cellInfo.y + '-col' + cellInfo.x}>
-        {getRevealedCellContent()}
+        {getDiscoveredCellContent()}
       </p>
     )
   }
 
   return (
     <div className='mine-field-cell'>
-      {cellInfo.isRevealed ? getRevealedCell() : getHiddenCell(cellInfo.userTag)}
+      {cellInfo.isRevealed ? getDiscoveredCell() : getCoveredCell(cellInfo.userTag)}
     </div>
   )
 }

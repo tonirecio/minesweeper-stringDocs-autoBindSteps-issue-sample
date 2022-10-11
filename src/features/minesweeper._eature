@@ -24,11 +24,6 @@ Examples:
 
 
   
-Scenario: Tagging a cell as mined 
-  Given the board loads the following data: "*"
-  When the user tags the cell, on row "1" column "1", as mined
-  Then the board should display the following data: "!"
-  And the remaining mines counter should be "0"
 
 Scenario: Tagging a cell as inconclusive
   Given the board loads the following data: "*"

@@ -59,6 +59,10 @@ export const isGameOver = () => {
   return screen.getByTestId('game-status').textContent === APP.GAME_STATUS_GAME_OVER
 }
 
+export const isGameWon = () => {
+  return screen.getByTestId('game-status').textContent === APP.GAME_STATUS_GAME_WON
+}
+
 export const isUncovered = (row, col) => {
   const cell = screen.getByTestId('cell-row' + row + '-col' + col)
   // const button = cell.querySelector('button')
@@ -110,6 +114,18 @@ export const areAllCellsCovered = () => {
   const mineField = screen.getByTestId('mine-field')
   const cells = mineField.querySelectorAll('.mine-field-cell-button')
   return cells.length === APP.NUMBER_OF_ROWS * APP.NUMBER_OF_COLUMNS
+}
+
+export const areAllCellsEnabledIs = (status) => {
+  let result = true
+  const mineField = screen.getByTestId('mine-field')
+  const cells = mineField.querySelectorAll('.mine-field-cell-button')
+  cells.forEach((cell) => {
+    if (cell.disabled === status) {
+      result = false
+    }
+  })
+  return result
 }
 
 export const isMineFieldLookLike = (expectedMineFieldStatus) => {
