@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Game from '../../components/Game'
 import * as APP from '../../App.consts'
@@ -20,6 +20,17 @@ export const loadMockData = (mockData) => {
 
 export const uncoverCell = (row, col) => {
   userEvent.click(screen.getByTestId('cell-row' + row + '-col' + col))
+}
+
+export const tagCell = (row, col, tag) => {
+  const cell = screen.getByTestId('cell-row' + row + '-col' + col)
+  const cellImage = cell.querySelector('img')
+  if (cellImage === null) {
+    fireEvent.contextMenu(cell)
+  } else if (cellImage.src.includes('question.svg')) {
+    fireEvent.contextMenu(cell)
+    fireEvent.contextMenu(cell)
+  }
 }
 
 export const isGameOver = () => {
@@ -63,6 +74,10 @@ export const isCellShowingA = (row, col, element) => {
     case 'a highlighted mine':
       cellValue = cell.querySelector('img')
       result = cellValue.src.includes('explosion.svg')
+      break
+    case '!':
+      cellValue = cell.querySelector('img')
+      result = cellValue.src.includes('flag.svg')
       break
     default :
   }

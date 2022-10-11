@@ -45,14 +45,14 @@ defineFeature(feature, test => {
     })
   })
 
-  test('Uncovering a cell with the mouse - Disabling the cell', ({ given, when, then }) => {
+  test('Uncovering a cell with the mouse - Using mouse left click', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
     })
     given('the player loads the following mock data:', (mockData) => {
       steps.loadMockData(mockData)
     })
-    when(/^the player clicks on the cell \((\d+),(\d+)\)$/, (row, col) => {
+    when(/^the player left clicks on the cell \((\d+),(\d+)\)$/, (row, col) => {
       steps.uncoverCell(Number(row) - 1, Number(col) - 1)
     })
     then(/^the cell \((\d+),(\d+)\) should be disabled$/, (row, col) => {
@@ -147,6 +147,18 @@ defineFeature(feature, test => {
     })
     then('the minefield should look like this:', (expectedMineFieldStatus) => {
       expect(steps.isMineFieldLookLike(expectedMineFieldStatus)).toBe(true)
+    })
+  })
+
+  test('Suspecting that a cell is hiding a mine - Tagging as mined', ({ given, when, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    when(/^the player tags as "(.*)" the cell \((\d+),(\d+)\)$/, (tag, row, col) => {
+      steps.tagCell(Number(row) - 1, Number(col) - 1, tag)
+    })
+    then(/^the cell \((\d+),(\d+)\) should show a "(.*)" symbol$/, (row, col, tag) => {
+      expect(steps.isCellShowingA(Number(row) - 1, Number(col) - 1, '!')).toBe(true)
     })
   })
 

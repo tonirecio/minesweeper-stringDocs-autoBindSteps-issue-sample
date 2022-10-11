@@ -43,19 +43,13 @@ Feature: Minesweeper
       "8" Clean cell with 8 adjacent mines
       "9" Clean cell with 9 adjacent mines
 
+  Game example: http://birrell.org/andrew/minesweeper/
+
 Background: 
   Given the player opens the game
 
 Scenario: Starting game - All the cells should be hidden  
   Then all the cells should be covered 
-          
-Scenario: Uncovering a cell with the mouse - Disabling the cell
-  Given the player loads the following mock data:
-  """
-  | * | o |  
-  """
-  When the player clicks on the cell (1,2)
-  Then the cell (1,2) should be disabled
 
 Scenario: Uncovering a cell - Disabling the cell
   Given the player loads the following mock data:
@@ -63,6 +57,14 @@ Scenario: Uncovering a cell - Disabling the cell
   | * | o |  
   """
   When the player uncovers the cell (1,2)
+  Then the cell (1,2) should be disabled
+
+Scenario: Uncovering a cell with the mouse - Using mouse left click
+  Given the player loads the following mock data:
+  """
+  | * | o |  
+  """
+  When the player left clicks on the cell (1,2)
   Then the cell (1,2) should be disabled
 
 Scenario: Uncovering a cell with a mine - Losing the game
@@ -73,7 +75,7 @@ Scenario: Uncovering a cell with a mine - Losing the game
   When the player uncovers the cell (1,1)
   Then the player should lose the game
 
-  Scenario: Uncovering a cell with a mine - Showing a highlighted mine
+Scenario: Uncovering a cell with a mine - Showing a highlighted mine
   Given the player loads the following mock data:
   """
   | * | o |
@@ -131,6 +133,6 @@ Scenario: Uncovering an empty cell - Uncovering neighbor cells
   | . | . | . |
   """
 
-  # And the board should display the following data: "*"
-  # And the remaining mines counter should be "1"
-  # And the game should be over with the following message: "You lose!"
+Scenario: Suspecting that a cell is hiding a mine - Tagging as mined
+  When the player tags as "mined" the cell (1,1)
+  Then the cell (1,1) should show a "mined" symbol
