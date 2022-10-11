@@ -20,7 +20,6 @@ const MineField = ({ mockData, loseGame, winGame }) => {
     const newBoard = [...gameBoard]
     for (let row = 0; row < newBoard.length; row++) {
       for (let col = 0; col < newBoard[0].length; col++) {
-        console.log('disbale cell', row, col)
         newBoard[row][col].isEnabled = false
       }
     }

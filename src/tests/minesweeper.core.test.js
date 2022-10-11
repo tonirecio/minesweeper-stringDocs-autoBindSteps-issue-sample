@@ -45,6 +45,15 @@ defineFeature(feature, test => {
     })
   })
 
+  test('Starting game - All the cells should be enabled', ({ given, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    then('all the cells should be enabled', () => {
+      expect(steps.areAllCellsEnabledIs(true)).toBe(true)
+    })
+  })
+
   test('Uncovering a cell with the mouse - Using mouse left click', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
