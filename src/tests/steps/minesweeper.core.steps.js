@@ -25,11 +25,33 @@ export const uncoverCell = (row, col) => {
 export const tagCell = (row, col, tag) => {
   const cell = screen.getByTestId('cell-row' + row + '-col' + col)
   const cellImage = cell.querySelector('img')
-  if (cellImage === null) {
-    fireEvent.contextMenu(cell)
-  } else if (cellImage.src.includes('question.svg')) {
-    fireEvent.contextMenu(cell)
-    fireEvent.contextMenu(cell)
+  switch (tag) {
+    case 'mined':
+      if (cellImage === null) {
+        fireEvent.contextMenu(cell)
+      } else if (cellImage.src.includes('question.svg')) {
+        fireEvent.contextMenu(cell)
+        fireEvent.contextMenu(cell)
+      }
+      break
+    case 'question':
+      if (cellImage === null) {
+        fireEvent.contextMenu(cell)
+        fireEvent.contextMenu(cell)
+      } else if (cellImage.src.includes('flag.svg')) {
+        fireEvent.contextMenu(cell)
+      }
+      break
+    case '':
+      if (cellImage.src.includes('flag.svg')) {
+        fireEvent.contextMenu(cell)
+        fireEvent.contextMenu(cell)
+      } else if (cellImage.src.includes('question.svg')) {
+        fireEvent.contextMenu(cell)
+      }
+      break
+    default:
+      break
   }
 }
 
@@ -54,7 +76,7 @@ export const isCellShowingA = (row, col, element) => {
   const cell = screen.getByTestId('cell-row' + row + '-col' + col)
   switch (element) {
     case '.':
-      result = !isUncovered(row, col)
+      result = !isUncovered(row, col) && cell.querySelector('img') === null
       break
     case '0':
       cellValue = cell.innerHTML

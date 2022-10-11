@@ -162,6 +162,20 @@ defineFeature(feature, test => {
     })
   })
 
+  test('Untagging the mined tag - Removing the mined symbol', ({ given, when, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    given(/^When the player tags as "(.*)" the cell \((\d+),(\d+)\)$/, (tag, row, col) => {
+      steps.tagCell(Number(row) - 1, Number(col) - 1, tag)
+    })
+    when(/^the player untags the cell \((\d+),(\d+)\)$/, (row, col) => {
+      steps.tagCell(Number(row) - 1, Number(col) - 1, '')
+    })
+    then(/^the cell \((\d+),(\d+)\) should not show a "(.*)" symbol$/, (row, col) => {
+      expect(steps.isCellShowingA(Number(row) - 1, Number(col) - 1, '.')).toBe(true)
+    })
+  })
   // test('The are no mines on the minefield - Winning game', ({
   //   given,
   //   then

@@ -136,3 +136,8 @@ Scenario: Uncovering an empty cell - Uncovering neighbor cells
 Scenario: Suspecting that a cell is hiding a mine - Tagging as mined
   When the player tags as "mined" the cell (1,1)
   Then the cell (1,1) should show a "mined" symbol
+
+Scenario: Untagging the mined tag - Removing the mined symbol
+  Given When the player tags as "mined" the cell (1,1)
+  When the player untags the cell (1,1)
+  Then the cell (1,1) should not show a "mined" symbol
