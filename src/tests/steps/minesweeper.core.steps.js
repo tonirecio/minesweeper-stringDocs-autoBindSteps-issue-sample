@@ -18,8 +18,12 @@ export const loadMockData = (mockData) => {
   userEvent.click(button)
 }
 
-export const uncoverCell = (row, col) => {
+export const leftClickOnCell = (row, col) => {
   userEvent.click(screen.getByTestId('cell-row' + row + '-col' + col))
+}
+
+export const righClickOnCell = (row, col) => {
+  fireEvent.contextMenu(screen.getByTestId('cell-row' + row + '-col' + col))
 }
 
 export const tagCell = (row, col, tag) => {
@@ -106,6 +110,7 @@ export const isCellShowingA = (row, col, element) => {
       result = cellValue.src.includes('flag.svg')
       break
     default :
+      break
   }
   return result
 }

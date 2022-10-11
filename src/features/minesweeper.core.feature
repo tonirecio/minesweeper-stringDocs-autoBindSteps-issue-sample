@@ -145,6 +145,10 @@ Scenario: Untagging the mined tag - Removing the mined symbol
   When the player untags the cell (1,1)
   Then the cell (1,1) should not show a "mined" symbol
 
+Scenario: Tagging a cell as mined using the mouse - Using mouse right click
+  When the player right clicks on the cell (1,1)
+  Then the cell (1,1) should show a "mined" symbol
+
 Scenario: Discovering all the cells without mines - Winning the game  
   Given the player loads the following mock data:
   """

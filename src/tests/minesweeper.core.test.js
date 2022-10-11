@@ -15,13 +15,13 @@ import * as steps from './steps/minesweeper.core.steps.js'
 //     steps.loadMockData(mockData)
 //   })
 //   when(/^the player clicks on the cell \((\d+),(\d+)\)$/, (row, col) => {
-//     steps.uncoverCell(row, col)
+//     steps.leftClickOnCell(row, col)
 //   })
 //   then(/^the cell \((\d+),(\d+)\) should be disabled$/, (row, col) => {
 //     steps.isUncovered(row, col)
 //   })
 //   when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
-//     steps.uncoverCell(row, col)
+//     steps.leftClickOnCell(row, col)
 //   })
 //   then(/^the cell \((\d+),(\d+)\) should show the following value: (.*)$/, (row, col, value) => {
 //     // steps.isValueInTheCell(row, col, value)
@@ -62,7 +62,7 @@ defineFeature(feature, test => {
       steps.loadMockData(mockData)
     })
     when(/^the player left clicks on the cell \((\d+),(\d+)\)$/, (row, col) => {
-      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+      steps.leftClickOnCell(Number(row) - 1, Number(col) - 1)
     })
     then(/^the cell \((\d+),(\d+)\) should be disabled$/, (row, col) => {
       expect(steps.isUncovered(Number(row) - 1, Number(col) - 1)).toBe(true)
@@ -77,7 +77,7 @@ defineFeature(feature, test => {
       steps.loadMockData(mockData)
     })
     when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
-      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+      steps.leftClickOnCell(Number(row) - 1, Number(col) - 1)
     })
     then(/^the cell \((\d+),(\d+)\) should be disabled$/, (row, col) => {
       expect(steps.isUncovered(Number(row) - 1, Number(col) - 1)).toBe(true)
@@ -92,7 +92,7 @@ defineFeature(feature, test => {
       steps.loadMockData(mockData)
     })
     when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
-      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+      steps.leftClickOnCell(Number(row) - 1, Number(col) - 1)
     })
     then('the player should lose the game', () => {
       expect(steps.isGameOver()).toBe(true)
@@ -107,7 +107,7 @@ defineFeature(feature, test => {
       steps.loadMockData(mockData)
     })
     when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
-      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+      steps.leftClickOnCell(Number(row) - 1, Number(col) - 1)
     })
     then(/^the cell \((\d+),(\d+)\) should show the following value: (.*)$/, (row, col, number) => {
       expect(steps.isValueInTheCell(Number(row) - 1, Number(col) - 1, number)).toBe(true)
@@ -122,7 +122,7 @@ defineFeature(feature, test => {
       steps.loadMockData(mockData)
     })
     when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
-      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+      steps.leftClickOnCell(Number(row) - 1, Number(col) - 1)
     })
     then(/^the cell \((.*),(.*)\) should be displayed empty$/, (row, col) => {
       expect(steps.isValueInTheCell(Number(row) - 1, Number(col) - 1, '')).toBe(true)
@@ -137,7 +137,7 @@ defineFeature(feature, test => {
       steps.loadMockData(mockData)
     })
     when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
-      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+      steps.leftClickOnCell(Number(row) - 1, Number(col) - 1)
     })
     then(/^the cell \((\d+),(\d+)\) should show: (.*)$/, (row, col, element) => {
       expect(steps.isCellShowingA(Number(row) - 1, Number(col) - 1, element)).toBe(true)
@@ -152,7 +152,7 @@ defineFeature(feature, test => {
       steps.loadMockData(mockData)
     })
     when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
-      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+      steps.leftClickOnCell(Number(row) - 1, Number(col) - 1)
     })
     then('the minefield should look like this:', (expectedMineFieldStatus) => {
       expect(steps.isMineFieldLookLike(expectedMineFieldStatus)).toBe(true)
@@ -186,6 +186,18 @@ defineFeature(feature, test => {
     })
   })
 
+  test('Tagging a cell as mined using the mouse - Using mouse right click', ({ given, when, then }) => {
+    given('the player opens the game', () => {
+      steps.openTheGame()
+    })
+    when(/^the player right clicks on the cell \((\d+),(\d+)\)$/, (row, col) => {
+      steps.righClickOnCell(Number(row) - 1, Number(col) - 1)
+    })
+    then(/^the cell \((\d+),(\d+)\) should show a "mined" symbol$/, (row, col) => {
+      expect(steps.isCellShowingA(Number(row) - 1, Number(col) - 1, '!')).toBe(true)
+    })
+  })
+
   test('Discovering all the cells without mines - Winning the game', ({ given, when, then }) => {
     given('the player opens the game', () => {
       steps.openTheGame()
@@ -194,7 +206,7 @@ defineFeature(feature, test => {
       steps.loadMockData(mockData)
     })
     when(/^the player uncovers the cell \((\d+),(\d+)\)$/, (row, col) => {
-      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+      steps.leftClickOnCell(Number(row) - 1, Number(col) - 1)
     })
     then('the player should win the game', () => {
       expect(steps.isGameWon()).toBe(true)
@@ -209,7 +221,7 @@ defineFeature(feature, test => {
       steps.loadMockData(mockData)
     })
     when(/^the player uncovers the cell \((.*),(.*)\)$/, (row, col) => {
-      steps.uncoverCell(Number(row) - 1, Number(col) - 1)
+      steps.leftClickOnCell(Number(row) - 1, Number(col) - 1)
     })
     then('all the cells should be disabled', () => {
       expect(steps.areAllCellsEnabledIs(false)).toBe(true)
